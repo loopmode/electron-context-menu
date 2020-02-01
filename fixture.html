@@ -6,15 +6,60 @@
 		<script>
 			window.addEventListener('load', () => {
 				const contextMenu = require('.');
+				let destroy;
+				create = () => contextMenu({
+					labels: {
+						cut: 'Configured Cut',
+						copy: 'Configured Copy',
+						paste: 'Configured Paste',
+						save: 'Configured Save Image',
+						saveImageAs: 'Configured Save Image As…',
+						copyLink: 'Configured Copy Link',
+						inspect: 'Configured Inspect'
+					},
+					prepend: () => [
+						{
+							label: 'Unicorn'
+						},
+						{
+							type: 'separator'
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Invisible',
+							visible: false
+						},
+						{
+							type: 'separator'
+						},
+						{
+							type: 'separator'
+						}
+					],
+					append: () => { },
+					showCopyImageAddress: true,
+					showSaveImageAs: true,
+					showInspectElement: false
 
-				contextMenu({
-					window: document.getElementById('webview')
 				});
+				document.getElementById('toggle').addEventListener('change', (event) => {
+					if (event.target.checked) {
+						destroy = create();
+					}
+					else if (destroy) {
+						destroy();
+					}
+				})
 			});
 		</script>
 	</head>
+
 	<body>
 		<h1>Fixture</h1>
+		<label>Use contextMenu <input id="toggle" type="checkbox" /></label>
+		<br>
 		<br>
 		<textarea></textarea>
 		<br>
@@ -30,4 +75,5 @@
 		<br>
 		<b>Copy <span style="color: hotPink">rich</span> text</b>
 	</body>
+
 </html>
